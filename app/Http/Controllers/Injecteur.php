@@ -34,8 +34,6 @@ class Injecteur extends Controller
     public function storeData(Request $request)
     {
 
-     
-
       $userId = Auth()->user()->id;
       $client = Client::create($request->all());
       if ($request->zone) {
@@ -106,13 +104,13 @@ class Injecteur extends Controller
 
     	$client  = Client::find($clientId);
         $connector = new DummyPrintConnector();
-		/* Start the printer */
-		$printer = new Printer($connector);
-		/* Initialize */
-		$printer -> initialize();
+      /* Start the printer */
+      $printer = new Printer($connector);
+      /* Initialize */
+      $printer -> initialize();
 
-		/* Print top logo */
-		$printer -> setJustification(Printer::JUSTIFY_CENTER);
+      /* Print top logo */
+      $printer -> setJustification(Printer::JUSTIFY_CENTER);
     	$olivo = EscposImage::load("resources/olivoalcazar.png", false);
 	    $printer -> bitImage($olivo);
    		$printer -> feed();
@@ -123,8 +121,8 @@ class Injecteur extends Controller
    		$ltime = $client->created_at->format('H:i');
    		//$printer -> setTextSize(4, 4);
    		$printer -> text(new item("$ldate", "$ltime"));
-		$printer -> setJustification(Printer::JUSTIFY_CENTER);
-		$printer -> setTextSize(2, 2);
+      $printer -> setJustification(Printer::JUSTIFY_CENTER);
+      $printer -> setTextSize(2, 2);
    		$printer -> text("$client->tour");
    		$printer -> feed();
    		$printer -> feed();
@@ -162,29 +160,29 @@ class Injecteur extends Controller
    		$printer -> feed();
 
    		$testStr = "http://192.168.31.100:8000/productGone/".$clientId;
-		$printer -> setJustification(Printer::JUSTIFY_CENTER);
-		$printer -> qrCode($testStr, Printer::QR_ECLEVEL_L, 5);
-		$printer -> feed();
-		$printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
-		$todayId = $client->created_at->format('Ymd');
-		$clientIdentifiant = "$todayId"." $clientId";
-		$printer -> text("# $clientIdentifiant");
+      $printer -> setJustification(Printer::JUSTIFY_CENTER);
+      $printer -> qrCode($testStr, Printer::QR_ECLEVEL_L, 5);
+      $printer -> feed();
+      $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
+      $todayId = $client->created_at->format('Ymd');
+      $clientIdentifiant = "$todayId"." $clientId";
+      $printer -> text("# $clientIdentifiant");
 
-$printer -> feed();
-$printer -> feed();
-$printer -> feed();
+      $printer -> feed();
+      $printer -> feed();
+      $printer -> feed();
 
-/* Cut the receipt and open the cash drawer */
-$printer -> cut();
-// send to app
-echo "base64,".base64_encode($connector -> getData());
-$printer -> pulse();
+      /* Cut the receipt and open the cash drawer */
+      $printer -> cut();
+      // send to app
+      echo "base64,".base64_encode($connector -> getData());
+      $printer -> pulse();
 
-$printer -> close();
+      $printer -> close();
 
-//$connector->finalize();
+      //$connector->finalize();
     }
-
+ 
 
     public function modifyData(Request $request, $clientId)
     {
