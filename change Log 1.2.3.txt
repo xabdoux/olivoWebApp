@@ -1,0 +1,9 @@
+Change log for olivo alcazar version 1.2.3
+
+-----------------------------------------
+
+Add 06 in value of input telephone
+Add next number under the "tour" field
+Add soft delete for Client :
+	+ delete client
+	+ restore Client

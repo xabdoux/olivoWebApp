@@ -1,0 +1,10 @@
+@media print{
+
+	html, body{
+		width:58mm;
+		height: 80mm;
+		color: red;
+
+		font-size: 20px;
+	}
+}

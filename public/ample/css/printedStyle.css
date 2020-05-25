@@ -1,0 +1,29 @@
+@media print {
+	.printableArea{
+		font-size: 10px;
+	}
+	.printableAreaArabic{
+		font-size: 10px;
+	}
+
+	#facturePrint{
+		font-size: 14px;
+	}
+	#factoryInfo{
+		font-size: 13px;
+	}
+	#clientName{
+		font-size: 12px;
+
+	}
+
+	.trPrint{
+		font-size: 10px;
+	}
+
+	.tdPrint{
+		padding: 8px;
+	}
+	
+	
+}
