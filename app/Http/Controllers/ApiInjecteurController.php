@@ -18,7 +18,31 @@ class ApiInjecteurController extends Controller
      */
     public function index()
     {
-        return  Client::where('served_by', NULL)->orderBy('id', 'desc')->get();
+        $client =   Client::select('id', 'name', 'phone', 'tour', 'created_at', 'deleted_at')->where('served_by', NULL)->orderBy('created_at', 'asc')->with(['produits' => function ($query) {
+            $query->select('nombre_sac', 'produits.id', 'tonnage');
+        }])->get();
+
+        return response()->json($client);
+        // 
+    }
+
+    public function deletedClients()
+    {
+       
+      // $clients = Client::onlyTrashed()->get();
+        $clients =   Client::select('id', 'name', 'phone', 'tour', 'created_at', 'deleted_at')->where('served_by', NULL)->orderBy('deleted_at', 'desc')->onlyTrashed()->with(['produits' => function ($query) {
+            $query->select('nombre_sac', 'produits.id', 'tonnage');
+        }])->get();
+        return response()->json($clients);
+
+    }
+    public function restoreClients($clientId)
+    {
+        
+       $client = Client::withTrashed()->find($clientId);
+       $client->restore();
+       return response()->json('success');
+       
     }
 
 
@@ -30,12 +54,28 @@ class ApiInjecteurController extends Controller
      */
     public function store(Request $request)
     {
-        $Client = new Client();
-        $Client->content = $request->content;
-        $Client->active = $request->active;
+       
+        $userId =  2;
+        $client = Client::create($request->all());
+        
+        foreach ($request->produits as $item) {
 
-        $Client->save();
-        return $Client;
+            $produit = new Produit;
+            $produit->nombre_sac = $item['nombre_sac'];
+            $produit->tonnage    = $item['tonnage'];
+            $produit->save();
+
+            $client_produit = new Client_produit;
+            $client_produit->client_id   = $client->id;
+            $client_produit->produit_id  = $produit->id;;
+            $client_produit->created_by  = $userId;
+            $client_produit->save();
+        }
+        return $client;
+        // return response()->json([
+        //     'id' => $client->id,
+        //     'sdsd'=>'sddsd',
+        // ]);
     }
 
     /**
@@ -57,14 +97,35 @@ class ApiInjecteurController extends Controller
      * @param  \App\Client  $Client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $clientId)
     {
-        $Client = Client::find($id);
-        $Client->content = $request->content;
-        $Client->active = $request->active;
+       
+      $userId = 2;
+      $client = Client::find($clientId);
+      $client->fill($request->all())->save();
 
-        $Client->save();
-        return $Client;
+      //delete to change it with the new data 
+      foreach ($client->produits as $produit) {
+        $produit->pivot->delete();
+        $produit->delete();
+      }
+
+    
+      foreach ($request->produits as $item) {
+
+        $produit = new Produit;
+        $produit->nombre_sac = $item['nombre_sac'];
+        $produit->tonnage    = $item['tonnage'];
+        $produit->save();
+
+        $client_produit = new Client_produit;
+        $client_produit->client_id   = $clientId;
+        $client_produit->produit_id  = $produit->id;;
+        $client_produit->created_by  = $userId;
+        $client_produit->save();
+      }
+      return $clientId;
+      
     }
 
     /**
@@ -75,9 +136,10 @@ class ApiInjecteurController extends Controller
      */
     public function destroy($id)
     {
+        
         $Client  = Client::find($id);
         $Client->delete();
-
-        return response()->json([]);
+        return $Client;
+        
     }
 }

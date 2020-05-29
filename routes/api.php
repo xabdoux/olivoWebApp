@@ -16,11 +16,17 @@ use Illuminate\Http\Request;
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+Route::fallback(function(){
+    return response()->json(['message' => 'Not Found!'], 404)->header('Content-Type', 'application/json');
+});
 
 Route::post('login', 'ApiController@login');
 Route::post('register', 'ApiController@register');
 
 Route::resource('/clients', 'ApiInjecteurController');
+Route::get('/clients-deleted', 'ApiInjecteurController@deletedClients');
+Route::patch('/clients-restore/{id}', 'ApiInjecteurController@restoreClients');
+
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
 
