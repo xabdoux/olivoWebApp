@@ -55,7 +55,7 @@ class ApiInjecteurController extends Controller
     public function store(Request $request)
     {
        
-        $userId =  2;
+        $userId =  $request->userId;
         $client = Client::create($request->all());
         
         foreach ($request->produits as $item) {

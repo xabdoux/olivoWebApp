@@ -21,14 +21,14 @@ Route::fallback(function(){
 });
 
 Route::post('login', 'ApiController@login');
-Route::post('register', 'ApiController@register');
+//Route::post('register', 'ApiController@register');
 
-Route::resource('/clients', 'ApiInjecteurController');
-Route::get('/clients-deleted', 'ApiInjecteurController@deletedClients');
-Route::patch('/clients-restore/{id}', 'ApiInjecteurController@restoreClients');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('logout', 'ApiController@logout');
-
+    
+    Route::resource('/clients', 'ApiInjecteurController');
+    Route::get('/clients-deleted', 'ApiInjecteurController@deletedClients');
+    Route::patch('/clients-restore/{id}', 'ApiInjecteurController@restoreClients');
     
 });

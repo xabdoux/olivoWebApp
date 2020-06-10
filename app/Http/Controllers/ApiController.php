@@ -33,6 +33,8 @@ public function login(Request $request)
         return response()->json([
             'success' => true,
             'token' => $token,
+            'id'=>  JWTAuth::user()->id,
+            'name'=> JWTAuth::user()->name,
         ]);
     }
 
