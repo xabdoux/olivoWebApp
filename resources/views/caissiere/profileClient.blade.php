@@ -314,7 +314,7 @@
         @if ($client->payed_at)
         <div class="text-right">
             <button class="btn btn-danger" type="button" id="printArabic"> <span><i class="fa fa-print"></i> اطبع الفاتورة</span> </button>
-            <button class="btn btn-danger" type="button" onclick='ajax_print("{{ url('printInvoicePayed', $client->id) }}")'> <span><i class="fa fa-print"></i> MINI Printer</span> </button>
+            <button class="btn btn-danger" type="button" onclick='ajax_print("{{ url('printInvoicePayed', $client->id) }}")'> <span><i class="fa fa-print"></i> Ticket</span> </button>
 
         </div>
         @endif
