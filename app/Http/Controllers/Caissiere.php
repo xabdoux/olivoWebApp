@@ -13,6 +13,7 @@ use Mike42\Escpos\EscposImage;
 //use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use App\item;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB as FacadesDB;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -21,6 +22,7 @@ class Caissiere extends Controller
 
     public function allClients()
     {
+        //return date('Y-m-d H:i:s');
         $alert = FacadesDB::table('clients')
             ->select('tour')
             ->where('served_at', NULL)
