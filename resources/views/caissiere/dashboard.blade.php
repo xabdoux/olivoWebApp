@@ -6,11 +6,11 @@
     <link href="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('page_title')
-<h4 class="page-title">Starter Page</h4>
+<h4 class="page-title">CLIENTS</h4>
 @endsection
 @section('breadcrumb')
 <li><a href="#">Dashboard</a></li>
-<li class="active">Starter Page</li>
+<li class="active">List des clients</li>
 @endsection
 @section('content')
 <style type="text/css">

@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ample/plugins/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ample/plugins/images/admin-logo.png') }}">
     <title>OLIVO AL CAZAR </title>
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">

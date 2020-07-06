@@ -13,7 +13,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ample/plugins/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('ample/plugins/images/admin-logo.png') }}">
     @yield('title')
     <!-- Bootstrap Core CSS -->
     <link href="{{ asset('ample/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -53,10 +53,10 @@
                     <!-- Logo -->
                     <a class="logo p-l-5" href="{{ url('dashboard') }}">
                         <!-- Logo icon image, you can use font-icon also --><b>
-                        <!--This is dark logo icon--><img src="{{ asset('ample/plugins/images/admin-logo.png') }}" alt="home" class="dark-logo" width="35px" /><!--This is light logo icon--><img src="{{ asset('ample/plugins/images/admin-logo-dark.png') }}" alt="home" class="light-logo" />
+                        {{-- <!--This is dark logo icon--><img src="{{ asset('ample/plugins/images/olivo_black.png') }}" alt="home" class="dark-logo" width="35px" /><!--This is light logo icon--><img src="{{ asset('ample/plugins/images/admin-logo-dark.png') }}" alt="home" class="light-logo" /> --}}
                      </b>
                         <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="{{ asset('ample/plugins/images/admin-text.png') }}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{ asset('ample/plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
+                        <!--This is dark logo text--><img src="{{ asset('ample/plugins/images/olivo_white.png') }}" height="45px" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{ asset('ample/plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
                      </span> </a>
                 </div>
                 <!-- /Logo -->
@@ -77,9 +77,6 @@
                                     <div class="u-text"><h4>{{ucfirst(Auth::user()->name)}}</h4><p class="text-muted">{{str_limit(Auth::user()->email, 20)}}</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                 </div>
                             </li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                            <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
                             <li role="separator" class="divider"></li>
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();

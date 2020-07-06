@@ -7,11 +7,11 @@
     <link href="{{ asset('ample/plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
 @endsection
 @section('page_title')
-<h4 class="page-title">Starter Page</h4>
+<h4 class="page-title">Clients Termines</h4>
 @endsection
 @section('breadcrumb')
 <li><a href="#">Dashboard</a></li>
-<li class="active">Starter Page</li>
+<li class="active">Clients Termines</li>
 @endsection
 @section('content')
 <style type="text/css">
@@ -29,7 +29,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="white-box p-t-0">
-            <button id="btnReload">rafrechir</button>
+            {{-- <button id="btnReload">rafrechir</button> --}}
             <div id="result"></div>
             <div class="table-responsive">
                 <table id="myTable" class="table table-striped display" style="width:100%">

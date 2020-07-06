@@ -24,7 +24,7 @@
       </div>  
   <div class="new-login-box m-t-22">
     <div class="white-box">
-      <a href="javascript:void(0)" class="text-center db"><img src="{{ asset('ample/plugins/images/admin-logo-dark.png')}}" width="150px" height="100px" alt="Home" /><br/><h3>OLIVO ALCAZAR<b></h3></b></a>  
+      <a href="javascript:void(0)" class="text-center db"><img src="{{ asset('ample/plugins/images/olivo_black.png')}}" height="100px" alt="Home" /><br/></a>  
         <form class="form-horizontal new-lg-form" id="loginform" method="POST" action="{{ route('login') }}">
         @csrf  
         <div class="form-group  m-t-20 m-b-10">
