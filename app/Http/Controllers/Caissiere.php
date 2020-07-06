@@ -20,9 +20,10 @@ use PhpParser\Node\Stmt\TryCatch;
 class Caissiere extends Controller
 {
 
-    public function allClients()
+    public function allClients($days)
     {
         //return date('Y-m-d H:i:s');
+        //return date('Y-m-d', strtotime("-3 days"));
         $alert = FacadesDB::table('clients')
             ->select('tour')
             ->where('served_at', NULL)
@@ -31,8 +32,19 @@ class Caissiere extends Controller
             ->havingRaw('COUNT(*) > 1')
             ->get();
 
-        $clients = Client::where('served_by', NULL)->orderBy('id', 'desc')->get();
-        /*return dd($clients);*/
+        if ($days == 14) {
+            $clients = Client::where('served_by', NULL)
+                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
+                ->orderBy('id', 'desc')->get();
+        } elseif ($days == 30) {
+            $clients = Client::where('served_by', NULL)
+                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
+                ->orderBy('id', 'desc')->get();
+        } elseif ($days == 'lifetime') {
+            $clients = Client::where('served_by', NULL)
+                ->orderBy('id', 'desc')->get();
+        }
+        //return dd($clients);
 
         return view('caissiere/dashboard', compact(['clients', 'alert']));
     }
@@ -60,65 +72,66 @@ class Caissiere extends Controller
             /* Initialize */
             $printer->initialize();
 
-            //   /* Print top logo */
-            //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            //   $olivo = EscposImage::load("resources/olivoalcazar.png", false);
-            //   $printer -> bitImage($olivo);
-            //   $printer -> feed();
-            //   //$printer -> setTextSize(2, 3);
-            //   $printer -> text("06 44 87 17 96\n");
-            // $printer -> text("----------\n");
-            //   $ldate = $client->created_at->format('d/m/Y');
-            //   $ltime = $client->created_at->format('H:i');
-            //   //$printer -> setTextSize(4, 4);
-            //   $printer -> text(new item("$ldate", "$ltime"));
-            //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            //   $printer -> setTextSize(2, 2);
-            //   $printer -> text("$client->tour");
-            //   $printer -> feed();
-            //   $printer -> feed();
-            // $printer -> selectPrintMode();
-            // $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            // $printer -> text(strtoupper($client->name));
-            // $printer -> feed();
+            /* Print top logo */
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            // image size 258 * 108
+            $olivo = EscposImage::load("resources/olivo_black.png", true);
+            $printer->bitImage($olivo);
+            $printer->feed();
+            //$printer -> setTextSize(2, 3);
+            $printer->text("06 44 87 17 96\n");
+            $printer->text("----------\n");
+            $ldate = $client->created_at->format('d/m/Y');
+            $ltime = $client->created_at->format('H:i');
+            //$printer -> setTextSize(4, 4);
+            $printer->text(new item("$ldate", "$ltime"));
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setTextSize(2, 2);
+            $printer->text("$client->tour");
+            $printer->feed();
+            $printer->feed();
+            $printer->selectPrintMode();
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text(strtoupper($client->name));
+            $printer->feed();
 
-            //   $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
-            //   $printer -> text(new item("Sac", "Poids"));
-            //   $printer -> text(" ---                      ----- \n");
-            // $printer -> selectPrintMode();
+            $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+            $printer->text(new item("Sac", "Poids"));
+            $printer->text(" ---                      ----- \n");
+            $printer->selectPrintMode();
 
-            //   $totalSac = 0;
-            //   $totalTonnage = 0;
-            //   foreach ($client->produits as $produit) {
-            //       $printer -> text(new item("$produit->nombre_sac", "$produit->tonnage Kg"));
-            //       $totalSac += $produit->nombre_sac;
-            //       $totalTonnage += $produit->tonnage;
-            //   }
+            $totalSac = 0;
+            $totalTonnage = 0;
+            foreach ($client->produits as $produit) {
+                $printer->text(new item("$produit->nombre_sac", "$produit->tonnage Kg"));
+                $totalSac += $produit->nombre_sac;
+                $totalTonnage += $produit->tonnage;
+            }
 
-            //   $printer -> text("________________________________\n");
-            //   $printer -> selectPrintMode();
-            // $printer -> setTextSize(1, 1);
-            //   $printer -> text(new item("$totalSac Sac", "$totalTonnage Kg"));
-            //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            //   $printer -> setTextSize(2, 2);
-            //   if ($totalTonnage <= 400) {
-            //       $totalPrix = 200;
-            //   }else {
-            //       $totalPrix = $totalTonnage/2;
-            //   }
-            //   $printer -> text("$totalPrix DH");
-            //   $printer -> feed();
-            //   $printer -> feed();
+            $printer->text("________________________________\n");
+            $printer->selectPrintMode();
+            $printer->setTextSize(1, 1);
+            $printer->text(new item("$totalSac Sac", "$totalTonnage Kg"));
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->setTextSize(2, 2);
+            if ($totalTonnage <= 400) {
+                $totalPrix = 200;
+            } else {
+                $totalPrix = $totalTonnage / 2;
+            }
+            $printer->text("$totalPrix DH");
+            $printer->feed();
+            $printer->feed();
 
-            //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-            //   $paye = EscposImage::load("resources/paye.png", false);
-            //   $printer -> bitImage($paye);
-            //   $printer -> feed();
-            //   $printer -> feed();
-            //   $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
-            //   $todayId = $client->created_at->format('Ymd');
-            //   $clientIdentifiant = "$todayId"." $clientId";
-            //   $printer -> text("# $clientIdentifiant");
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $paye = EscposImage::load("resources/paye.png", false);
+            $printer->bitImage($paye);
+            $printer->feed();
+            $printer->feed();
+            $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+            $todayId = $client->created_at->format('Ymd');
+            $clientIdentifiant = "$todayId" . " $clientId";
+            $printer->text("# $clientIdentifiant");
 
             $printer->feed();
             $printer->feed();
@@ -196,67 +209,68 @@ class Caissiere extends Controller
         /* Start the printer */
         $printer = new Printer($connector);
         /* Initialize */
-        // $printer -> initialize();
+        $printer->initialize();
 
-        //   /* Print top logo */
-        //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-        //   $olivo = EscposImage::load("resources/olivoalcazar.png", false);
-        //   $printer -> bitImage($olivo);
-        //   $printer -> feed();
-        //   //$printer -> setTextSize(2, 3);
-        //   $printer -> text("06 44 87 17 96\n");
-        // $printer -> text("----------\n");
-        //   $ldate = $client->created_at->format('d/m/Y');
-        //   $ltime = $client->created_at->format('H:i');
-        //   //$printer -> setTextSize(4, 4);
-        //   $printer -> text(new item("$ldate", "$ltime"));
-        //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-        //   $printer -> setTextSize(2, 2);
-        //   $printer -> text("$client->tour");
-        //   $printer -> feed();
-        //   $printer -> feed();
-        // $printer -> selectPrintMode();
-        // $printer -> setJustification(Printer::JUSTIFY_CENTER);
-        // $printer -> text(strtoupper($client->name));
-        // $printer -> feed();
+        /* Print top logo */
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        // image size 258 * 108
+        $olivo = EscposImage::load("resources/olivo_black.png", true);
+        $printer->bitImage($olivo);
+        $printer->feed();
+        //$printer -> setTextSize(2, 3);
+        $printer->text("06 44 87 17 96\n");
+        $printer->text("----------\n");
+        $ldate = $client->created_at->format('d/m/Y');
+        $ltime = $client->created_at->format('H:i');
+        //$printer -> setTextSize(4, 4);
+        $printer->text(new item("$ldate", "$ltime"));
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->setTextSize(2, 2);
+        $printer->text("$client->tour");
+        $printer->feed();
+        $printer->feed();
+        $printer->selectPrintMode();
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text(strtoupper($client->name));
+        $printer->feed();
 
-        //   $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
-        //   $printer -> text(new item("Sac", "Poids"));
-        //   $printer -> text(" ---                      ----- \n");
-        // $printer -> selectPrintMode();
+        $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+        $printer->text(new item("Sac", "Poids"));
+        $printer->text(" ---                      ----- \n");
+        $printer->selectPrintMode();
 
-        //   $totalSac = 0;
-        //   $totalTonnage = 0;
-        //   foreach ($client->produits as $produit) {
-        //       $printer -> text(new item("$produit->nombre_sac", "$produit->tonnage Kg"));
-        //       $totalSac += $produit->nombre_sac;
-        //       $totalTonnage += $produit->tonnage;
-        //   }
+        $totalSac = 0;
+        $totalTonnage = 0;
+        foreach ($client->produits as $produit) {
+            $printer->text(new item("$produit->nombre_sac", "$produit->tonnage Kg"));
+            $totalSac += $produit->nombre_sac;
+            $totalTonnage += $produit->tonnage;
+        }
 
-        //   $printer -> text("________________________________\n");
-        //   $printer -> selectPrintMode();
-        // $printer -> setTextSize(1, 1);
-        //   $printer -> text(new item("$totalSac Sac", "$totalTonnage Kg"));
-        //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-        //   $printer -> setTextSize(2, 2);
-        //   if ($totalTonnage <= 400) {
-        //       $totalPrix = 200;
-        //   }else {
-        //       $totalPrix = $totalTonnage/2;
-        //   }
-        //   $printer -> text("$totalPrix DH");
-        //   $printer -> feed();
-        //   $printer -> feed();
+        $printer->text("________________________________\n");
+        $printer->selectPrintMode();
+        $printer->setTextSize(1, 1);
+        $printer->text(new item("$totalSac Sac", "$totalTonnage Kg"));
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->setTextSize(2, 2);
+        if ($totalTonnage <= 400) {
+            $totalPrix = 200;
+        } else {
+            $totalPrix = $totalTonnage / 2;
+        }
+        $printer->text("$totalPrix DH");
+        $printer->feed();
+        $printer->feed();
 
-        //   $printer -> setJustification(Printer::JUSTIFY_CENTER);
-        //   $paye = EscposImage::load("resources/paye.png", false);
-        //   $printer -> bitImage($paye);
-        //   $printer -> feed();
-        //   $printer -> feed();
-        //   $printer -> selectPrintMode(Printer::MODE_EMPHASIZED);
-        //   $todayId = $client->created_at->format('Ymd');
-        //   $clientIdentifiant = "$todayId"." $clientId";
-        //   $printer -> text("# $clientIdentifiant");
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $paye = EscposImage::load("resources/paye.png", false);
+        $printer->bitImage($paye);
+        $printer->feed();
+        $printer->feed();
+        $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
+        $todayId = $client->created_at->format('Ymd');
+        $clientIdentifiant = "$todayId" . " $clientId";
+        $printer->text("# $clientIdentifiant");
 
         $printer->feed();
         $printer->feed();

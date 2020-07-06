@@ -51,7 +51,7 @@
                 <!-- Toggle icon for mobile view -->
                 <div class="top-left-part">
                     <!-- Logo -->
-                    <a class="logo p-l-5" href="{{ url('dashboard') }}">
+                    <a class="logo p-l-30" href="{{ url('dashboard', 14) }}">
                         <!-- Logo icon image, you can use font-icon also --><b>
                         {{-- <!--This is dark logo icon--><img src="{{ asset('ample/plugins/images/olivo_black.png') }}" alt="home" class="dark-logo" width="35px" /><!--This is light logo icon--><img src="{{ asset('ample/plugins/images/admin-logo-dark.png') }}" alt="home" class="light-logo" /> --}}
                      </b>
@@ -105,7 +105,7 @@
                 <div class="sidebar-head">
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
                 <ul class="nav" id="side-menu">
-                    <li><a href="{{ url('dashboard') }}" class="waves-effect"><i data-icon="7" class="fa fa-users" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> List des Clients</span></a> </li>
+                    <li><a href="{{ url('dashboard', 14) }}" class="waves-effect"><i data-icon="7" class="fa fa-users" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> List des Clients</span></a> </li>
                     <li><a href="{{ url('finishedClients') }}" class="waves-effect"><i data-icon="7" class="fa fa-sign-out" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Clients terminés</span></a> </li>
                     
                     

@@ -32,7 +32,7 @@
             <div class="table-responsive">
                 @if(count($alert))
                <!-- <div dir="rtl" class="alert alert-danger"> <i class="fa fa-warning"></i>&nbsp;&nbsp;يجب ابلاغ الزبون بأن سعر طحن الزيتون الأقل من 400kg هو 200 درهم   </div> -->
-               <div class="alert alert-danger"><i class="fa fa-warning"></i> Attention! les numeros suivants sont repetés:
+               <div class="alert alert-danger m-t-20"><i class="fa fa-warning"></i> Attention! les numeros suivants sont repetés:
                  <ul>
                     @foreach($alert as $num)
                         
@@ -42,6 +42,24 @@
                  </ul>
                 </div>
             @endif
+            <div class="col-xs-12 m-t-20 m-b-20">
+                <div class="col-xs-4">
+                    <div class="col-xs-8">
+                        <a href="{{ url('dashboard', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('dashboard/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="col-xs-8">
+                    <a href="{{ url('dashboard', [30]) }}"><button class="btn btn-block {{!Request::is('dashboard/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                    </div>
+                    
+                </div>
+                <div class="col-xs-4">
+                    <div class="col-xs-8">
+                       <a href="{{ url('dashboard', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('dashboard/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                    </div>
+                </div>
+            </div>
                 <table id="myTable" class="table table-striped display" style="width:100%">
 
                     <thead>

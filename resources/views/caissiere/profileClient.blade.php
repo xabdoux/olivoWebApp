@@ -70,7 +70,7 @@
             </div>
         </div>
         <hr class="m-t-0">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="float: none">
             <div class="white-box">
                 <h3 class="box-title m-b-30">ACTIVITÉ CLIENT</h3>
                 <div class="steamline">
