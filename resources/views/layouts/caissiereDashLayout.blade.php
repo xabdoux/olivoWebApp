@@ -106,7 +106,7 @@
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
                 <ul class="nav" id="side-menu">
                     <li><a href="{{ url('dashboard', 14) }}" class="waves-effect"><i data-icon="7" class="fa fa-users" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> List des Clients</span></a> </li>
-                    <li><a href="{{ url('finishedClients') }}" class="waves-effect"><i data-icon="7" class="fa fa-sign-out" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Clients terminés</span></a> </li>
+                    <li><a href="{{ url('finishedClients', 14) }}" class="waves-effect"><i data-icon="7" class="fa fa-sign-out" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Clients terminés</span></a> </li>
                     
                     
                 </ul>

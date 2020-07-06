@@ -188,10 +188,20 @@ class Caissiere extends Controller
     }
 
 
-    public function finishedClients()
+    public function finishedClients($days)
     {
-        $clients = Client::where('served_by', '!=', NULL)->orderBy('served_at', 'desc')->get();
-        /*return dd($clients);*/
+        if ($days == 14) {
+            $clients = Client::where('served_by', '!=', NULL)
+                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
+                ->orderBy('served_at', 'desc')->get();
+        } elseif ($days == 30) {
+            $clients = Client::where('served_by', '!=', NULL)
+                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
+                ->orderBy('served_at', 'desc')->get();
+        } elseif ($days == 'lifetime') {
+            $clients = Client::where('served_by', '!=', NULL)
+                ->orderBy('served_at', 'desc')->get();
+        }
 
         return view('caissiere/finishedClients', compact(['clients']));
     }

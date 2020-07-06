@@ -32,6 +32,24 @@
             {{-- <button id="btnReload">rafrechir</button> --}}
             <div id="result"></div>
             <div class="table-responsive">
+                <div class="col-xs-12 m-t-20 m-b-20">
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                            <a href="{{ url('finishedClients', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('finishedClients/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                        <a href="{{ url('finishedClients', [30]) }}"><button class="btn btn-block {{!Request::is('finishedClients/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                        </div>
+                        
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                           <a href="{{ url('finishedClients', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('finishedClients/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                        </div>
+                    </div>
+                </div>
                 <table id="myTable" class="table table-striped display" style="width:100%">
 
                     <thead>

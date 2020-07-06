@@ -25,7 +25,7 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('productOut/{clientId}', 'Caissiere@productOut');
 	Route::get('productOutCanceled/{clientId}', 'Caissiere@productOutCanceled');
 	Route::get('paymentCanceled/{clientId}', 'Caissiere@paymentCanceled');
-	Route::get('finishedClients/', 'Caissiere@finishedClients');
+	Route::get('finishedClients/{days}', 'Caissiere@finishedClients');
 	Route::get('printInvoicePayed/{clientId}', 'Caissiere@printInvoicePayed');
 
 
