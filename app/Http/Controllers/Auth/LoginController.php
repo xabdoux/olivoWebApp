@@ -27,17 +27,17 @@ class LoginController extends Controller
      * @var string
      */
     //protected $redirectTo = '/dashboard';
-     protected function authenticated($request, $user)
+    protected function authenticated($request, $user)
     {
         if ($user->role == 'injecteur') {
-             return redirect('ajouter-client');
-         }elseif ($user->role == 'caissiere') {
-             return redirect('/dashboard');
-         }elseif ($user->role == 'admin') {
+            return redirect('ajouter-client');
+        } elseif ($user->role == 'caissiere') {
+            return redirect('/dashboard/14');
+        } elseif ($user->role == 'admin') {
             return redirect('adminDashboard');
-         }
-          
-          return redirect('donneur');
+        }
+
+        return redirect('donneur');
     }
 
 

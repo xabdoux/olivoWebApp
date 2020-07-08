@@ -56,7 +56,7 @@
                         <!--This is dark logo icon--><img src="{{ asset('ample/plugins/images/admin-logo.png') }}" alt="home" class="dark-logo" width="35px"/><!--This is light logo icon--><img src="{{ asset('ample/plugins/images/admin-logo-dark.png') }}" alt="home" class="light-logo" />
                      </b>
                         <!-- Logo text image you can use text also --><span class="hidden-xs">
-                        <!--This is dark logo text--><img src="{{ asset('ample/plugins/images/admin-text.png') }}" alt="home" class="dark-logo" /><!--This is light logo text--><img src="{{ asset('ample/plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
+                        <!--This is dark logo text--><img src="{{ asset('ample/plugins/images/olivo_white.png') }}" alt="home" height="45" class="dark-logo" /><!--This is light logo text--><img src="{{ asset('ample/plugins/images/admin-text-dark.png') }}" alt="home" class="light-logo" />
                      </span> </a>
                 </div>
                 <!-- /Logo -->
@@ -109,7 +109,7 @@
                     <h3><span class="fa-fw open-close"><i class="ti-menu hidden-xs"></i><i class="ti-close visible-xs"></i></span> <span class="hide-menu">Navigation</span></h3> </div>
                 <ul class="nav" id="side-menu">
                     <li><a href="{{ url('adminDashboard') }}" class="waves-effect"><i data-icon="7" class="fa  fa-dashboard" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Dashboard</span></a> </li>
-                    <li><a href="{{ url('addUser') }}" class="waves-effect"><i data-icon="7" class=" icon-user-follow" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Ajouter Utilisateur</span></a> </li>
+                    <li><a href="{{ url('addUser') }}" class="waves-effect"><i data-icon="7" class=" icon-user-follow" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Gestion d'utilisateur</span></a> </li>
                     
                     
                 </ul>

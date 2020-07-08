@@ -61,9 +61,14 @@ Route::middleware(['can:isDonneur, Auth::user()', 'auth'])->group(function () {
 Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
 
 
-	Route::get('adminDashboard', 'Admin@adminDashboard');
+	//Route::get('adminDashboard', 'Admin@adminDashboard');
+	Route::get('adminDashboard', function () {
+		return redirect('addUser');
+	});
 	Route::get('addUser', 'Admin@addUser');
 	Route::post('addUser', 'Admin@registerUser');
+	Route::get('deleteUser/{userId}', 'Admin@deleteUser');
+	Route::post('updateUser/{userId}', 'Admin@updateUser');
 });
 
 Auth::routes();
