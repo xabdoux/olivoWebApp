@@ -65,6 +65,9 @@ Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
 	Route::get('adminDashboard', function () {
 		return redirect('addUser');
 	});
+	Route::get('home', function () {
+		return redirect('addUser');
+	});
 	Route::get('addUser', 'Admin@addUser');
 	Route::post('addUser', 'Admin@registerUser');
 	Route::get('deleteUser/{userId}', 'Admin@deleteUser');

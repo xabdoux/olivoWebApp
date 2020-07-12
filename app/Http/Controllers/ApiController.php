@@ -36,6 +36,7 @@ class APIController extends Controller
             'token' => $token,
             'id' =>  JWTAuth::user()->id,
             'name' => JWTAuth::user()->name,
+            'username' => JWTAuth::user()->username,
         ]);
     }
 

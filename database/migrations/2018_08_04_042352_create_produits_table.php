@@ -16,7 +16,7 @@ class CreateProduitsTable extends Migration
         Schema::create('produits', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('nombre_sac');
-            $table->integer('tonnage');
+            $table->double('tonnage');
             $table->timestamps();
         });
     }

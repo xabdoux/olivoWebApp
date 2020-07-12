@@ -31,7 +31,7 @@ class Admin extends Controller
             'name' => 'required',
             'username' => 'required|alpha_dash|unique:users|min:3|max:15',
             'role' => 'required',
-            'password' => 'required|confirmed|min:6|max:6|numeric',
+            'password' => 'required|confirmed|min:6|numeric',
         ]);
 
         $store = new User;
