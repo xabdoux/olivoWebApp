@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     
     Route::resource('/clients', 'ApiInjecteurController');
     Route::get('/clients-deleted', 'ApiInjecteurController@deletedClients');
+    Route::get('/clients-awaiting', 'ApiInjecteurController@awaitingClients');
     Route::patch('/clients-restore/{id}', 'ApiInjecteurController@restoreClients');
     
 });

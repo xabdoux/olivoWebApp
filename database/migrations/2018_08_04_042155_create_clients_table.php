@@ -19,6 +19,7 @@ class CreateClientsTable extends Migration
             $table->string('phone');
             $table->integer('tour');
             $table->string('zone_id')->nullable();
+            $table->string('type', 100)->nullable()->default('principale');
             $table->integer('litre')->nullable();
             $table->integer('payed_by')->nullable();
             $table->timestamp('payed_at')->nullable();

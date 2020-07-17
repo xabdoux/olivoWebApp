@@ -11,7 +11,7 @@ class Client extends Model
     //
 
     protected $fillable = [
-        'name', 'phone', 'tour', 'zone_id', 'litre', 'created_at', 'deleted_at'
+        'name', 'phone', 'tour', 'zone_id', 'litre', 'type', 'created_at', 'deleted_at'
     ];
 
     protected $dates = ['payed_at', 'served_at', 'deleted_at'];

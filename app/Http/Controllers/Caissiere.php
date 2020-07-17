@@ -22,26 +22,29 @@ class Caissiere extends Controller
 
     public function allClients($days)
     {
-        //return date('Y-m-d H:i:s');
-        //return date('Y-m-d', strtotime("-3 days"));
+
         $alert = FacadesDB::table('clients')
             ->select('tour')
             ->where('served_at', NULL)
             ->where('deleted_at', NULL)
+            ->where('type', "principale")
             ->groupBy('tour')
             ->havingRaw('COUNT(*) > 1')
             ->get();
 
         if ($days == 14) {
             $clients = Client::where('served_by', NULL)
+                ->where('type', "principale")
                 ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
                 ->orderBy('id', 'desc')->get();
         } elseif ($days == 30) {
             $clients = Client::where('served_by', NULL)
+                ->where('type', "principale")
                 ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
                 ->orderBy('id', 'desc')->get();
         } elseif ($days == 'lifetime') {
             $clients = Client::where('served_by', NULL)
+                ->where('type', "principale")
                 ->orderBy('id', 'desc')->get();
         }
         //return dd($clients);
@@ -192,14 +195,17 @@ class Caissiere extends Controller
     {
         if ($days == 14) {
             $clients = Client::where('served_by', '!=', NULL)
+                ->where('type', "principale")
                 ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
                 ->orderBy('served_at', 'desc')->get();
         } elseif ($days == 30) {
             $clients = Client::where('served_by', '!=', NULL)
+                ->where('type', "principale")
                 ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
                 ->orderBy('served_at', 'desc')->get();
         } elseif ($days == 'lifetime') {
             $clients = Client::where('served_by', '!=', NULL)
+                ->where('type', "principale")
                 ->orderBy('served_at', 'desc')->get();
         }
 
