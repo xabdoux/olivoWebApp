@@ -28,11 +28,9 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('finishedClients/{days}', 'Caissiere@finishedClients');
 	Route::get('printInvoicePayed/{clientId}', 'Caissiere@printInvoicePayed');
 
-
-
-
-
 	Route::get('ajaxtest', 'Caissiere@ajaxtest');
+	Route::get('getData', 'Caissiere@getData');
+	
 });
 
 Route::middleware(['can:isInjecteur, Auth::user()', 'auth'])->group(function () {
@@ -59,9 +57,6 @@ Route::middleware(['can:isDonneur, Auth::user()', 'auth'])->group(function () {
 });
 
 Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
-
-
-	//Route::get('adminDashboard', 'Admin@adminDashboard');
 	Route::get('adminDashboard', function () {
 		return redirect('addUser');
 	});
@@ -74,9 +69,4 @@ Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
 	Route::post('updateUser/{userId}', 'Admin@updateUser');
 });
 
-Auth::routes();
-
-
-    	
-
-//Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes(['register' => false]);

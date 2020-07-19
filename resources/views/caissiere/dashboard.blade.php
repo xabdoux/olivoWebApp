@@ -3,7 +3,7 @@
 <title>Welcome to Dashboard</title>
 @endsection
 @section('stylesheet')
-    <link href="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('page_title')
 <h4 class="page-title">CLIENTS</h4>
@@ -15,13 +15,14 @@
 @section('content')
 <style type="text/css">
     tfoot {
-    display: table-header-group;
-}
+        display: table-header-group;
+    }
 
-    #myTable_length{
+    #myTable_length {
         display: none;
     }
-    #myTable_filter{
+
+    #myTable_filter {
         display: none;
     }
 </style>
@@ -31,40 +32,40 @@
             <div id="result"></div>
             <div class="table-responsive">
                 @if(count($alert))
-               <!-- <div dir="rtl" class="alert alert-danger"> <i class="fa fa-warning"></i>&nbsp;&nbsp;يجب ابلاغ الزبون بأن سعر طحن الزيتون الأقل من 400kg هو 200 درهم   </div> -->
-               <div class="alert alert-danger m-t-20"><i class="fa fa-warning"></i> Attention! les numeros suivants sont repetés:
-                 <ul>
-                    @foreach($alert as $num)
-                        
-                            <li>{{ $num->tour }}</li>
-                       
-                    @endforeach
-                 </ul>
+                <!-- <div dir="rtl" class="alert alert-danger"> <i class="fa fa-warning"></i>&nbsp;&nbsp;يجب ابلاغ الزبون بأن سعر طحن الزيتون الأقل من 400kg هو 200 درهم   </div> -->
+                <div class="alert alert-danger m-t-20"><i class="fa fa-warning"></i> Attention! les numeros suivants sont repetés:
+                    <ul>
+                        @foreach($alert as $num)
+
+                        <li>{{ $num->tour }}</li>
+
+                        @endforeach
+                    </ul>
                 </div>
-            @endif
-            <div class="col-xs-12 m-t-20 m-b-20">
-                <div class="col-xs-4">
-                    <div class="col-xs-8">
-                        <a href="{{ url('dashboard', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('dashboard/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                @endif
+                <div class="col-xs-12 m-t-20 m-b-20">
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                            <a href="{{ url('dashboard', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('dashboard/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                            <a href="{{ url('dashboard', [30]) }}"><button class="btn btn-block {{!Request::is('dashboard/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                        </div>
+
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="col-xs-8">
+                            <a href="{{ url('dashboard', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('dashboard/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-xs-4">
-                    <div class="col-xs-8">
-                    <a href="{{ url('dashboard', [30]) }}"><button class="btn btn-block {{!Request::is('dashboard/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
-                    </div>
-                    
-                </div>
-                <div class="col-xs-4">
-                    <div class="col-xs-8">
-                       <a href="{{ url('dashboard', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('dashboard/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
-                    </div>
-                </div>
-            </div>
                 <table id="myTable" class="table table-striped display" style="width:100%">
 
                     <thead>
                         <tr>
-                            <th style="">#ID</th>
+                            <th>#ID</th>
                             <th>Nom</th>
                             <th>Tour</th>
                             <th>Statut</th>
@@ -80,7 +81,7 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <tbody>
+                    <!-- <tbody>
 
                         @foreach ($clients as $client)
                         <tr>
@@ -91,16 +92,16 @@
                             <td class="text-center">
                                 <a href="{{ url('profileClient',$client->id) }}" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>
                                 @if ($client->payed_at)
-                                    <button type="button" class="btn btn-success btn-circle"><i class="fa  fa-money"></i> </button>
-                                    
+                                <button type="button" class="btn btn-success btn-circle"><i class="fa  fa-money"></i> </button>
+
                                 @else
-                                    <a href="{{ url('proceedToPayment',$client->id) }}"><button type="button" class="btn btn-default btn-circle"><i class="fa  fa-money"></i> </button></a>
+                                <a href="{{ url('proceedToPayment',$client->id) }}"><button type="button" class="btn btn-default btn-circle"><i class="fa  fa-money"></i> </button></a>
                                 @endif
-                                
+
                             </td>
                         </tr>
                         @endforeach
-                    </tbody>
+                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -109,44 +110,106 @@
 @endsection
 @section('script')
 <script>
+    $(document).ready(function() {
 
-        
-        $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        var x = 1;
+        $('#myTable tfoot th').each(function() {
+            var title = $(this).text();
+            if (x == 5) {
+                $(this).html('<input type="hidden" placeholder="" />');
+            } else {
+                $(this).html('<input type="text" placeholder="" />');
+            }
+            x++;
+        });
 
-    // Setup - add a text input to each footer cell
-    var x = 1;
-    $('#myTable tfoot th').each( function () {
-        var title = $(this).text();
-        if (x == 5) {
-            $(this).html( '<input type="hidden" placeholder="" />' );
-        }else{
-            $(this).html( '<input type="text" placeholder="" />' );
-        }
-        x++;
-    } );
+        // DataTable
+        var table = $('#myTable').DataTable({
 
-    // DataTable
-    var table = $('#myTable').DataTable({
+            "ajax": "{{ url('getData') }}",
+            "dataSrc": '',
+            "columns": [{
+                    "data": 'id'
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'phone'
+                },
+                {
+                    "data": 'tour'
+                },
+                {
+                    "data": 'id',
+                    "render": function(id, type, row) {
+                        var isPayed;
+                        if (row.payed_at) {
 
-        "order": [[4, 'desc']]
-              , "displayLength": 15,
+                            isPayed = '<button type="button" class="btn btn-success btn-circle"><i class="fa  fa-money"></i> </button>';
+
+                        } else {
+                            isPayed = '<a href="/proceedToPayment/' + id + '"><button type="button" class="btn btn-default btn-circle"><i class="fa  fa-money"></i> </button></a></td>';
+                        }
+
+                        return '<td class="text-center"><a href="/profileClient/' + id + '" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>' + isPayed;
+
+                    }
+
+                }
+            ],
+
+            "order": [
+                [4, 'desc']
+            ],
+            "displayLength": 15,
+
+        });
+
+        // Apply the search
+        table.columns().every(function() {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+
+        setInterval(function() {
+            table.ajax.reload(null, false);
+        }, 3000);
 
     });
+</script>
+<!-- <script>
+    $(document).ready(function() {
+        $('#myTable').DataTable({
 
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
- 
-} );
-    </script>
+            "ajax": "{{ url('getData') }}",
+            "columns": [{
+                    "data": 'id'
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'phone'
+                },
+                {
+                    "data": 'tour'
+                },
+                {
+                    "data": 'type'
+                }
+            ]
+
+        });
+    });
+</script> -->
 <script src="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 @endsection

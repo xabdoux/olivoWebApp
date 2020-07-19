@@ -16,7 +16,7 @@ class ApiInjecteurController extends Controller
      */
     public function index()
     {
-        $client =   Client::select('id', 'name', 'phone', 'tour', 'created_at', 'deleted_at')
+        $client =   Client::select('id', 'name', 'phone', 'type', 'tour', 'created_at', 'deleted_at')
             ->where('served_by', NULL)
             ->where('type', "principale")
             ->orderBy('tour', 'asc')
@@ -43,7 +43,7 @@ class ApiInjecteurController extends Controller
     }
     public function awaitingClients()
     {
-        $client =   Client::select('id', 'name', 'phone', 'tour', 'created_at', 'deleted_at', 'type')
+        $client =   Client::select('id', 'name', 'phone', 'tour', 'type', 'created_at', 'deleted_at')
             ->where('served_by', NULL)
             ->where('type', "attente")
             ->orderBy('tour', 'asc')
@@ -87,10 +87,6 @@ class ApiInjecteurController extends Controller
             $client_produit->save();
         }
         return $client;
-        // return response()->json([
-        //     'id' => $client->id,
-        //     'sdsd'=>'sddsd',
-        // ]);
     }
 
     /**

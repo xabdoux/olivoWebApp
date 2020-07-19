@@ -52,6 +52,17 @@ class Caissiere extends Controller
         return view('caissiere/dashboard', compact(['clients', 'alert']));
     }
 
+    public function getData()
+    {
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', NULL)
+            ->where('type', "principale")
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
+            ->orderBy('id', 'desc')->get();
+        // return view("caissiere.tableData", compact(['clients']));
+        return response()->json(["data" => $clients]);
+    }
+
     public function profileClient($clientId)
     {
         $client = Client::find($clientId);
