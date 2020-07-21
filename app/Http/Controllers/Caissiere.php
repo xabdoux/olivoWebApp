@@ -242,7 +242,7 @@ class Caissiere extends Controller
 
     public function getFinishedData()
     {
-        
+       return; 
     }
 
 
