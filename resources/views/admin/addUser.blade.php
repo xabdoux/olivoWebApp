@@ -19,7 +19,7 @@
             <div class="panel-heading"><i class="icon-badge"> </i> Ajouter utilisateur
                 <div class="pull-right"><a href="#" data-perform="panel-collapse"><i class="ti-minus"></i></a> <a href="#"></i></a> </div>
             </div>
-        <div class="panel-wrapper collapse {{$errors->any()? 'in':''}}" aria-expanded="{{$errors->any()?"true":'false'}}">
+        <div class="panel-wrapper collapse in" aria-expanded="true">
                 <div class="panel-body">
 
                     <form method="POST" action="{{ url('addUser') }}" data-toggle="validator">

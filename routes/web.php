@@ -32,6 +32,10 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('getData/14', 'Caissiere@getData14');
 	Route::get('getData/30', 'Caissiere@getData30');
 	Route::get('getData/lifetime', 'Caissiere@getDataLifeTime');
+
+	Route::get('getFinishedData/14', 'Caissiere@getFinishedData14');
+	Route::get('getFinishedData/30', 'Caissiere@getFinishedData30');
+	Route::get('getFinishedData/lifetime', 'Caissiere@getFinishedDataLifeTime');
 	
 });
 
@@ -72,3 +76,6 @@ Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
 });
 
 Auth::routes(['register' => false]);
+Route::match(['get', 'post'], 'register', function () {
+    return abort(403, 'Forbidden');
+})->name('register');

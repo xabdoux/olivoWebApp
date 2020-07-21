@@ -36,18 +36,18 @@
                 <div class="col-xs-12 m-t-20 m-b-20">
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('finishedClients', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('finishedClients/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                            <button id="reloadTableLifeTime" class="btn btn-block btn-outline btn-rounded btn-info">Tous les jours <i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('finishedClients', [30]) }}"><button class="btn btn-block {{!Request::is('finishedClients/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                            <button id="reloadTable30" class="btn btn-block btn-outline btn-rounded btn-info">30 days <i class="fa fa-refresh"></i></button>
                         </div>
 
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('finishedClients', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('finishedClients/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                            <button id="reloadTable14" class="btn btn-block btn-info btn-outline btn-rounded"> 14 Days <i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                 </div>
@@ -152,6 +152,17 @@
             ],
             "displayLength": 15,
 
+        });
+        $("#reloadTable14").click(function() {
+            table.ajax.url("{{ url('getFinishedData',14) }}").load();
+        });
+
+        $("#reloadTable30").click(function() {
+            table.ajax.url("{{ url('getFinishedData',30) }}").load();
+        });
+
+        $("#reloadTableLifeTime").click(function() {
+            table.ajax.url("{{ url('getFinishedData','lifetime') }}").load();
         });
 
 

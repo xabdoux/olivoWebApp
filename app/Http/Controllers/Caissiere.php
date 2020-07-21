@@ -2,20 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Auth;
-use DB;
 use App\Client;
-use App\Client_produit;
-use App\Produit;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
-//use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use App\item;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB as FacadesDB;
-use PhpParser\Node\Stmt\TryCatch;
 
 class Caissiere extends Controller
 {
@@ -240,10 +232,33 @@ class Caissiere extends Controller
         return view('caissiere/finishedClients', compact(['clients']));
     }
 
-    public function getFinishedData()
+    public function getFinishedData14()
     {
-       return; 
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', '!=', NULL)
+            ->where('type', "principale")
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
+            ->orderBy('served_at', 'desc')->get();
+        return response()->json(["data" => $clients]);
     }
+    public function getFinishedData30()
+    {
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', '!=', NULL)
+            ->where('type', "principale")
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
+            ->orderBy('served_at', 'desc')->get();
+        return response()->json(["data" => $clients]);
+    }
+    public function getFinishedDataLifeTime()
+    {
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', '!=', NULL)
+            ->where('type', "principale")
+            ->orderBy('served_at', 'desc')->get();
+        return response()->json(["data" => $clients]);
+    }
+
 
 
     public function ajaxtest()

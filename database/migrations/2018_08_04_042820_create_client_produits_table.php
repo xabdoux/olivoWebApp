@@ -17,7 +17,7 @@ class CreateClientProduitsTable extends Migration
             $table->increments('id');
             $table->integer('client_id');
             $table->integer('produit_id');
-            $table->integer('created_by');
+            $table->integer('created_by')->default(1);
             $table->timestamps();
         });
     }
