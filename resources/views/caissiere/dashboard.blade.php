@@ -46,18 +46,18 @@
                 <div class="col-xs-12 m-t-20 m-b-20">
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('dashboard', [14]) }}"><button class="btn btn-block btn-info {{!Request::is('dashboard/14') ? "btn-outline":'' }} btn-rounded">14 Days </button></a>
+                            <button id="reloadTableLifeTime" class="btn btn-block btn-outline btn-rounded btn-info">Tous les jours <i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('dashboard', [30]) }}"><button class="btn btn-block {{!Request::is('dashboard/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                            <button id="reloadTable30" class="btn btn-block btn-outline btn-rounded btn-info">30 days <i class="fa fa-refresh"></i></button>
                         </div>
 
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                            <a href="{{ url('dashboard', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('dashboard/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                            <button id="reloadTable14" class="btn btn-block btn-info btn-outline btn-rounded"> 14 Days <i class="fa fa-refresh"></i></button>
                         </div>
                     </div>
                 </div>
@@ -81,27 +81,7 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <!-- <tbody>
 
-                        @foreach ($clients as $client)
-                        <tr>
-                            <td>{{$client->id}}</td>
-                            <td>{{$client->name}}</td>
-                            <td>{{$client->tour}}</td>
-                            <td class="text-center">{!!$client->payed_at ? "<span class='label label-success label-rounded'>Payé</span>":"<span class='label label-warning label-rounded'>En Attente</span>" !!}</td>
-                            <td class="text-center">
-                                <a href="{{ url('profileClient',$client->id) }}" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>
-                                @if ($client->payed_at)
-                                <button type="button" class="btn btn-success btn-circle"><i class="fa  fa-money"></i> </button>
-
-                                @else
-                                <a href="{{ url('proceedToPayment',$client->id) }}"><button type="button" class="btn btn-default btn-circle"><i class="fa  fa-money"></i> </button></a>
-                                @endif
-
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody> -->
                 </table>
             </div>
         </div>
@@ -109,6 +89,7 @@
 </div>
 @endsection
 @section('script')
+<script src="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 <script>
     $(document).ready(function() {
 
@@ -127,7 +108,7 @@
         // DataTable
         var table = $('#myTable').DataTable({
 
-            "ajax": "{{ url('getData') }}",
+            "ajax": "{{ url('getData',14) }}",
             "dataSrc": '',
             "columns": [{
                     "data": 'id'
@@ -136,10 +117,20 @@
                     "data": 'name'
                 },
                 {
-                    "data": 'phone'
+                    "data": 'tour'
                 },
                 {
-                    "data": 'tour'
+                    "data": 'payed_at',
+                    "render": function(payed_at) {
+                        var isPayed;
+                        if (payed_at) {
+                            isPayed = '<span class="label label-success label-rounded">Payé</span>';
+                        } else {
+                            isPayed = '<span class="label label-warning label-rounded">En Attente</span>';
+                        }
+                        return isPayed;
+                    }
+
                 },
                 {
                     "data": 'id',
@@ -180,36 +171,20 @@
             });
         });
 
-        setInterval(function() {
-            table.ajax.reload(null, false);
-        }, 3000);
+        $("#reloadTable14").click(function() {
+            table.ajax.url("{{ url('getData',14) }}").load();
+        });
 
+        $("#reloadTable30").click(function() {
+            table.ajax.url("{{ url('getData/30') }}").load();
+        });
+
+        $("#reloadTableLifeTime").click(function() {
+            table.ajax.url("{{ url('getData','lifetime') }}").load();
+        });
+        // setInterval(function() {
+        //     table.ajax.reload(null, false);
+        // }, 3000);
     });
 </script>
-<!-- <script>
-    $(document).ready(function() {
-        $('#myTable').DataTable({
-
-            "ajax": "{{ url('getData') }}",
-            "columns": [{
-                    "data": 'id'
-                },
-                {
-                    "data": 'name'
-                },
-                {
-                    "data": 'phone'
-                },
-                {
-                    "data": 'tour'
-                },
-                {
-                    "data": 'type'
-                }
-            ]
-
-        });
-    });
-</script> -->
-<script src="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 @endsection

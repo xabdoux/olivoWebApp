@@ -29,7 +29,9 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('printInvoicePayed/{clientId}', 'Caissiere@printInvoicePayed');
 
 	Route::get('ajaxtest', 'Caissiere@ajaxtest');
-	Route::get('getData', 'Caissiere@getData');
+	Route::get('getData/14', 'Caissiere@getData14');
+	Route::get('getData/30', 'Caissiere@getData30');
+	Route::get('getData/lifetime', 'Caissiere@getDataLifeTime');
 	
 });
 

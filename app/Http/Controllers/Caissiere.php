@@ -31,35 +31,52 @@ class Caissiere extends Controller
             ->groupBy('tour')
             ->havingRaw('COUNT(*) > 1')
             ->get();
-
-        if ($days == 14) {
-            $clients = Client::where('served_by', NULL)
-                ->where('type', "principale")
-                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
-                ->orderBy('id', 'desc')->get();
-        } elseif ($days == 30) {
-            $clients = Client::where('served_by', NULL)
-                ->where('type', "principale")
-                ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
-                ->orderBy('id', 'desc')->get();
-        } elseif ($days == 'lifetime') {
-            $clients = Client::where('served_by', NULL)
-                ->where('type', "principale")
-                ->orderBy('id', 'desc')->get();
-        }
+        // if ($days == 14) {
+        //     $clients = Client::where('served_by', NULL)
+        //         ->where('type', "principale")
+        //         ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
+        //         ->orderBy('id', 'desc')->get();
+        // } elseif ($days == 30) {
+        //     $clients = Client::where('served_by', NULL)
+        //         ->where('type', "principale")
+        //         ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
+        //         ->orderBy('id', 'desc')->get();
+        // } elseif ($days == 'lifetime') {
+        //     $clients = Client::where('served_by', NULL)
+        //         ->where('type', "principale")
+        //         ->orderBy('id', 'desc')->get();
+        // }
         //return dd($clients);
 
-        return view('caissiere/dashboard', compact(['clients', 'alert']));
+        return view('caissiere/dashboard', compact(['alert']));
     }
 
-    public function getData()
+    public function getData14()
     {
         $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
             ->where('served_by', NULL)
             ->where('type', "principale")
             ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-14 days")))
             ->orderBy('id', 'desc')->get();
-        // return view("caissiere.tableData", compact(['clients']));
+        return response()->json(["data" => $clients]);
+    }
+
+    public function getData30()
+    {
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', NULL)
+            ->where('type', "principale")
+            ->where('created_at', '>=', date('Y-m-d H:i:s', strtotime("-30 days")))
+            ->orderBy('id', 'desc')->get();
+        return response()->json(["data" => $clients]);
+    }
+
+    public function getDataLifeTime()
+    {
+        $clients = Client::select('id', 'name', 'phone', 'tour', 'type', 'payed_at')
+            ->where('served_by', NULL)
+            ->where('type', "principale")
+            ->orderBy('id', 'desc')->get();
         return response()->json(["data" => $clients]);
     }
 
@@ -221,6 +238,11 @@ class Caissiere extends Controller
         }
 
         return view('caissiere/finishedClients', compact(['clients']));
+    }
+
+    public function getFinishedData()
+    {
+        
     }
 
 

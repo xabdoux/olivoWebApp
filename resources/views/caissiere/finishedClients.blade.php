@@ -3,8 +3,8 @@
 <title>Welcome to Dashboard</title>
 @endsection
 @section('stylesheet')
-    <link href="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('ample/plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
+<link href="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('ample/plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
 @endsection
 @section('page_title')
 <h4 class="page-title">Clients Termines</h4>
@@ -16,13 +16,14 @@
 @section('content')
 <style type="text/css">
     tfoot {
-    display: table-header-group;
-}
+        display: table-header-group;
+    }
 
-    #myTable_length{
+    #myTable_length {
         display: none;
     }
-    #myTable_filter{
+
+    #myTable_filter {
         display: none;
     }
 </style>
@@ -40,13 +41,13 @@
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                        <a href="{{ url('finishedClients', [30]) }}"><button class="btn btn-block {{!Request::is('finishedClients/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
+                            <a href="{{ url('finishedClients', [30]) }}"><button class="btn btn-block {{!Request::is('finishedClients/30') ? "btn-outline":'' }} btn-rounded btn-info">30 days</button></a>
                         </div>
-                        
+
                     </div>
                     <div class="col-xs-4">
                         <div class="col-xs-8">
-                           <a href="{{ url('finishedClients', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('finishedClients/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
+                            <a href="{{ url('finishedClients', ['lifetime']) }}"> <button class="btn btn-block {{!Request::is('finishedClients/lifetime') ? "btn-outline":'' }} btn-rounded btn-info">Tous les jours</button></a>
                         </div>
                     </div>
                 </div>
@@ -70,55 +71,23 @@
                             <th>Action</th>
                         </tr>
                     </tfoot>
-                    <tbody>
+                    {{-- <tbody>
 
                         @foreach ($clients as $client)
                         <tr>
                             <td>{{$client->id}}</td>
-                            <td>{{$client->name}}</td>
-                            <td>{{$client->tour}}</td>
-                            <td class="text-center">{!!$client->payed_at ? "<span class='label label-success label-rounded'>Payé</span>":"<span class='label label-warning label-rounded'>En Attente</span>" !!}</td>
-                            <td class="text-center">
-                                <a href="{{ url('profileClient',$client->id) }}" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>
-                                @if ($client->payed_at)
-                                    {{-- <button type="button" class="btn btn-danger btn-circle"><i class="fa   fa-repeat"></i> </button> --}}
-
-                                    <a href="#" data-toggle="modal" data-target=".{{$client->id}}" id="{{$client->id}}" class="btn btn-danger btn-circle">
-                                    <i class="fa fa-repeat" color: #5867a7"></i>
-                                </a>
-
-
-
-                                <!-- sample modal content -->
-                    <div class="modal fade {{$client->id}}" tabindex="1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;top: 30%;">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title" id="mySmallModalLabel"><div data-icon="G" class="linea-icon linea-basic text-center text-primary"> الزبون لم يخرج الزيت بعد  <div></h4>
-                            </div>
-                            <div class="modal-body"> 
-                                
-                                <button data-dismiss="modal" class="btn btn-outline btn-default waves-effect waves-light "> <i class="fa fa-times"></i> 
-                                    <span>لا , إلغاء </span>
-                                </button>
-                              
-                               
-                               <div class="pull-right"><a  href="{{ url('productOutCanceled/'.$client->id) }}" class="btn btn-info waves-effect waves-light ">
-                                    <span>نعم  , تأكيد </span> <i class="fa fa-check"></i>
-                                </a></div>
-                                
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                                    
-                                @else
-                                    <a href="{{ url('proceedToPayment',$client->id) }}"><button type="button" class="btn btn-default btn-circle"><i class="fa  fa-money"></i> </button></a>
-                                @endif
-                                
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
+                    <td>{{$client->name}}</td>
+                    <td>{{$client->tour}}</td>
+                    <td class="text-center">{!!$client->payed_at ? "<span class='label label-success label-rounded'>Payé</span>":"<span class='label label-warning label-rounded'>En Attente</span>" !!}</td>
+                    <td class="text-center">
+                        <a href="{{ url('profileClient',$client->id) }}" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>
+                        <a href="{{ url('productOutCanceled',$client->id) }}" class="btn btn-danger btn-circle">
+                            <i class="fa fa-repeat"></i>
+                        </a>
+                    </td>
+                    </tr>
+                    @endforeach
+                    </tbody> --}}
                 </table>
             </div>
         </div>
@@ -127,52 +96,87 @@
 @endsection
 @section('script')
 <script>
+    $(document).ready(function() {
 
-        
-        $(document).ready(function() {
+        // Setup - add a text input to each footer cell
+        var x = 1;
+        $('#myTable tfoot th').each(function() {
+            var title = $(this).text();
+            if (x == 5) {
+                $(this).html('<input type="hidden" placeholder="" />');
+            } else {
+                $(this).html('<input type="text" placeholder="" />');
+            }
+            x++;
+        });
 
-    // Setup - add a text input to each footer cell
-    var x = 1;
-    $('#myTable tfoot th').each( function () {
-        var title = $(this).text();
-        if (x == 5) {
-            $(this).html( '<input type="hidden" placeholder="" />' );
-        }else{
-            $(this).html( '<input type="text" placeholder="" />' );
-        }
-        x++;
-    } );
+        // DataTable
+        var table = $('#myTable').DataTable({
 
-    // DataTable
-    var table = $('#myTable').DataTable({
+            "ajax": "{{ url('getFinishedData',14) }}",
+            "dataSrc": '',
+            "columns": [{
+                    "data": 'id'
+                },
+                {
+                    "data": 'name'
+                },
+                {
+                    "data": 'tour'
+                },
+                {
+                    "data": 'payed_at',
+                    "render": function(payed_at) {
+                        var isPayed;
+                        if (payed_at) {
+                            isPayed = '<span class="label label-success label-rounded">Payé</span>';
+                        } else {
+                            isPayed = '<span class="label label-warning label-rounded">En Attente</span>';
+                        }
+                        return isPayed;
+                    }
 
-        "order": [[4, 'desc']]
-              , "displayLength": 15,
+                },
+                {
+                    "data": 'id',
+                    "render": function(id, type, row) {
+                        return '<a href="/profileClient/' + id + '" class="m-r-20"><button type="button" class="btn btn-info btn-circle"><i class="fa  fa-user"></i> </button></a>' + '<a href="/productOutCanceled/' + id + '" class="btn btn-danger btn-circle"><i class="fa fa-repeat"></i></a>';
+
+                    }
+
+                }
+            ],
+
+            "order": [
+                [4, 'desc']
+            ],
+            "displayLength": 15,
+
+        });
+
+
+        // Apply the search
+        table.columns().every(function() {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function() {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
 
     });
-
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
- 
-} );
-    </script>
+</script>
 <script src="{{ asset('ample/plugins/bower_components/datatables/jquery.dataTables.min.js') }}"></script>
 @if(session()->has('success'))
 <script src="{{ asset('ample/plugins/bower_components/sweetalert/sweetalert.min.js') }}"></script>
 <script src="{{ asset('ample/plugins/bower_components/sweetalert/jquery.sweet-alert.custom.js') }}"></script>
 
-    <script>
-        swal('Success!', "{{session()->get('success')}}", 'success');
-    </script>
-@endif 
+<script>
+    swal('Success!', "{{session()->get('success')}}", 'success');
+</script>
+@endif
 @endsection
