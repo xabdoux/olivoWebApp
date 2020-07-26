@@ -20,14 +20,15 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('123456'),
         ]);
         
-        // factory(App\Client::class, 10)->create();
-        // factory(App\Produit::class, 10)->create();
-        factory(App\Client::class, 500)->create()->each(function ($client) {
-        $client->produits()->save(factory(App\Produit::class)->make());
-        $client->produits()->save(factory(App\Produit::class)->make());
-        $client->produits()->save(factory(App\Produit::class)->make());
-        $client->produits()->save(factory(App\Produit::class)->make());
-        $client->produits()->save(factory(App\Produit::class)->make());
-    });
+        //     factory(App\Client::class, 10)->create(); //create 10 client 
+        //     factory(App\Produit::class, 10)->create();//create 10 produit 
+
+        //     factory(App\Client::class, 500)->create()->each(function ($client) {
+        //     $client->produits()->save(factory(App\Produit::class)->make());
+        //     $client->produits()->save(factory(App\Produit::class)->make());
+        //     $client->produits()->save(factory(App\Produit::class)->make());
+        //     $client->produits()->save(factory(App\Produit::class)->make());
+        //     $client->produits()->save(factory(App\Produit::class)->make());
+        // });
     }
 }
