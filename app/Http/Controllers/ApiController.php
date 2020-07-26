@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
 use JWTAuth;
 use App\User;
 use Illuminate\Http\Request;
@@ -30,6 +31,11 @@ class APIController extends Controller
                 'message' => 'Invalid Email or Password',
             ], 401);
         }
+        $contact = Configuration::where("nom", "contact")->first();
+        $number = "";
+        if ($contact) {
+            $number = $contact->value;
+        }
 
         return response()->json([
             'success' => true,
@@ -37,6 +43,8 @@ class APIController extends Controller
             'id' =>  JWTAuth::user()->id,
             'name' => JWTAuth::user()->name,
             'username' => JWTAuth::user()->username,
+            'contactNumber' => $number,
+
         ]);
     }
 

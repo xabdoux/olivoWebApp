@@ -110,6 +110,7 @@
                 <ul class="nav" id="side-menu">
                     <li><a href="{{ url('adminDashboard') }}" class="waves-effect"><i data-icon="7" class="fa  fa-dashboard" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Dashboard</span></a> </li>
                     <li><a href="{{ url('addUser') }}" class="waves-effect"><i data-icon="7" class=" icon-user-follow" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Gestion d'utilisateur</span></a> </li>
+                    <li><a href="{{ url('configuration') }}" class="waves-effect"><i data-icon="7" class=" fa fa-cog" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Configuration</span></a> </li>
                     
                     
                 </ul>

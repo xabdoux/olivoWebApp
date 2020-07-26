@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Configuration;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
@@ -80,6 +81,11 @@ class Caissiere extends Controller
 
     public function proceedToPayment($clientId)
     {
+        $contact = Configuration::where("nom", "contact")->first();
+        $number = "";
+        if ($contact) {
+            $number = $contact->value;
+        }
         $user = Auth()->user()->id;
         $today = date('Y-m-d H:i:s');
         $client = Client::find($clientId);
@@ -89,7 +95,7 @@ class Caissiere extends Controller
         //print invoice
         $client  = Client::find($clientId);
         try {
-            $connector = new WindowsPrintConnector("SHAREDPRINTER");
+            $connector = new WindowsPrintConnector("POS58");
             /* Start the printer */
             $printer = new Printer($connector);
             /* Initialize */
@@ -102,10 +108,10 @@ class Caissiere extends Controller
             $printer->bitImage($olivo);
             $printer->feed();
             //$printer -> setTextSize(2, 3);
-            $printer->text("06 44 87 17 96\n");
+            $printer->text("$number \n");
             $printer->text("----------\n");
             $ldate = $client->created_at->format('d/m/Y');
-            $ltime = $client->created_at->format('H:i');
+            $ltime = date('H:i', strtotime('+1 hour', strtotime($client->created_at->format('H:i'))));
             //$printer -> setTextSize(4, 4);
             $printer->text(new item("$ldate", "$ltime"));
             $printer->setJustification(Printer::JUSTIFY_CENTER);
@@ -152,7 +158,7 @@ class Caissiere extends Controller
             $printer->feed();
             $printer->feed();
             $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
-            $todayId = $client->created_at->format('Ymd');
+            $todayId = $client->created_at->format('dmY');
             $clientIdentifiant = "$todayId" . " $clientId";
             $printer->text("# $clientIdentifiant");
 
@@ -268,8 +274,13 @@ class Caissiere extends Controller
 
     public function printInvoicePayed($clientId)
     {
+        $contact = Configuration::where("nom", "contact")->first();
+        $number = "";
+        if ($contact) {
+            $number = $contact->value;
+        }
         $client  = Client::find($clientId);
-        $connector = new WindowsPrintConnector("SHAREDPRINTER");
+        $connector = new WindowsPrintConnector("POS58");
         /* Start the printer */
         $printer = new Printer($connector);
         /* Initialize */
@@ -282,10 +293,10 @@ class Caissiere extends Controller
         $printer->bitImage($olivo);
         $printer->feed();
         //$printer -> setTextSize(2, 3);
-        $printer->text("06 44 87 17 96\n");
+        $printer->text("$number \n");
         $printer->text("----------\n");
         $ldate = $client->created_at->format('d/m/Y');
-        $ltime = $client->created_at->format('H:i');
+        $ltime = date('H:i', strtotime('+1 hour', strtotime($client->created_at->format('H:i'))));
         //$printer -> setTextSize(4, 4);
         $printer->text(new item("$ldate", "$ltime"));
         $printer->setJustification(Printer::JUSTIFY_CENTER);
@@ -332,7 +343,7 @@ class Caissiere extends Controller
         $printer->feed();
         $printer->feed();
         $printer->selectPrintMode(Printer::MODE_EMPHASIZED);
-        $todayId = $client->created_at->format('Ymd');
+        $todayId = $client->created_at->format('dmY');
         $clientIdentifiant = "$todayId" . " $clientId";
         $printer->text("# $clientIdentifiant");
 

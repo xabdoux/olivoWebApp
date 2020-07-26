@@ -36,7 +36,6 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('getFinishedData/14', 'Caissiere@getFinishedData14');
 	Route::get('getFinishedData/30', 'Caissiere@getFinishedData30');
 	Route::get('getFinishedData/lifetime', 'Caissiere@getFinishedDataLifeTime');
-	
 });
 
 Route::middleware(['can:isInjecteur, Auth::user()', 'auth'])->group(function () {
@@ -73,9 +72,15 @@ Route::middleware(['can:isAdmin, Auth::user()', 'auth'])->group(function () {
 	Route::post('addUser', 'Admin@registerUser');
 	Route::get('deleteUser/{userId}', 'Admin@deleteUser');
 	Route::post('updateUser/{userId}', 'Admin@updateUser');
+
+	Route::resource('configuration', 'ConfigurationController');
 });
 
 Auth::routes(['register' => false]);
 Route::match(['get', 'post'], 'register', function () {
-    return abort(403, 'Forbidden');
+	return abort(403, 'Forbidden');
 })->name('register');
+
+Route::get('dashboard', function () {
+		return redirect('dashboard/14');
+	});
