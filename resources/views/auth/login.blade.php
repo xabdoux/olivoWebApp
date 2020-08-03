@@ -17,6 +17,7 @@
         <p class="text-muted">
           TRITURATION DES OLIVES, LA VALORISATION, LA TRANSFORMATION, LE CONDITIONNEMENT, L EMBALLAGE ET LA VENTE DES PRODUITS DE L'OLIVIER
         </p>
+
         <br><br><br>
         <p>Copyright © 2018 OLIVO AL-CAZAR - All Rights Reserved</p>
       </div>
@@ -66,6 +67,7 @@
         <div class="form-group m-b-0">
           <div class="col-sm-12 text-center">
             <p>Don't have an account? <a href="{{ route('register') }}" class="text-primary m-l-5"><b>{{ __('Register') }}</b></a></p>
+            <a href="{{ url('privacy-policy') }}">Privacy policy</a>
           </div>
         </div>
       </form>
