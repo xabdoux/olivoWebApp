@@ -69,7 +69,7 @@
                 </div>
                @endif
             </div>
-            
+            @if ($clients->isNotEmpty())
             <div class="col-xs-4 text-center">
                 <p style="font-size:16px ">Total Clients {{$clients->count()}}</p>
             </div>
@@ -79,13 +79,18 @@
             <div class="col-xs-4 text-center">
                 <p style="font-size:16px ">Total Revenue {{$totalPrix}} Dh</p>
             </div>
+            @endif
+            
         </div>
-            <div class="col-lg-2 col-sm-4 col-xs-12 noprint">
-               <a href="{{ url('archiver') }}"> <button class="btn btn-block btn-info">Archiver</button></a>
-            </div>
-            <div class="col-lg-2 col-sm-4 col-xs-12 noprint">
-                 <button onclick="window.print()" class="btn btn-block btn-success">Imprimer</button>
-             </div>
+        @if ($clients->isNotEmpty())
+        <div class="col-lg-2 col-sm-4 col-xs-12 noprint">
+            <a href="{{ url('archiver') }}"> <button class="btn btn-block btn-info">Archiver</button></a>
+         </div>
+         <div class="col-lg-2 col-sm-4 col-xs-12 noprint">
+              <button onclick="window.print()" class="btn btn-block btn-success">Imprimer</button>
+          </div>
+        @endif
+           
     </div>
 </div>
 @endsection
