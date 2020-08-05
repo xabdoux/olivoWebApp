@@ -107,7 +107,8 @@
                 <ul class="nav" id="side-menu">
                     <li><a href="{{ url('dashboard', 14) }}" class="waves-effect"><i data-icon="7" class="fa fa-users" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> List des Clients</span></a> </li>
                     <li><a href="{{ url('finishedClients', 14) }}" class="waves-effect"><i data-icon="7" class="fa fa-sign-out" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Clients terminés</span></a> </li>
-                    
+                    <li><a href="{{ url('comptabilite') }}" class="waves-effect"><i data-icon="7" class="fa fa-money" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Comptabilité</span></a> </li>
+                    <li><a href="{{ url('compta-historique') }}" class="waves-effect"><i data-icon="7" class="fa fa-money" style="font-size: 20px; margin-right: 4px;"> </i> <span class="hide-menu" style="font-size: 18px;"> Historique Comptabilité</span></a> </li>
                     
                 </ul>
             </div>

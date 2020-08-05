@@ -36,6 +36,10 @@ Route::middleware(['can:isCaissiere, Auth::user()', 'auth'])->group(function () 
 	Route::get('getFinishedData/14', 'Caissiere@getFinishedData14');
 	Route::get('getFinishedData/30', 'Caissiere@getFinishedData30');
 	Route::get('getFinishedData/lifetime', 'Caissiere@getFinishedDataLifeTime');
+	Route::get('comptabilite', 'Caissiere@comptabilite');
+	Route::get('archiver', 'Caissiere@archiver');
+	Route::get('compta-historique', 'Caissiere@historiqueCompta');
+	Route::get('comptabilite-historique/{counted_at}', 'Caissiere@historiqueComptaList');
 });
 
 Route::middleware(['can:isInjecteur, Auth::user()', 'auth'])->group(function () {
@@ -82,5 +86,5 @@ Route::match(['get', 'post'], 'register', function () {
 })->name('register');
 
 Route::get('dashboard', function () {
-		return redirect('dashboard/14');
-	});
+	return redirect('dashboard/14');
+});

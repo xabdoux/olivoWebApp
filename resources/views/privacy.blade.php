@@ -43,14 +43,12 @@
                             de traçabilité à l'unité de trituration. Une fois sa demande est acceptée, le producteur
                             s'engage à respecter de manière stricte cette procédure de gestion de la production
                             des olives. </p>
-                   
                 </div>
             </div>
         </div>
     </div>
   </div>
 </section>
-
 
 <!-- jQuery -->
 <script src="{{ asset('ample/plugins/bower_components/jquery/dist/jquery.min.js') }}"></script>

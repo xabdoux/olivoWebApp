@@ -23,6 +23,7 @@ class CreateClientsTable extends Migration
             $table->integer('litre')->nullable();
             $table->integer('payed_by')->nullable();
             $table->timestamp('payed_at')->nullable();
+            $table->timestamp('counted_at')->nullable();
             $table->integer('served_by')->nullable();
             $table->timestamp('served_at')->nullable();
             $table->timestamps();

@@ -8,6 +8,7 @@ use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use App\item;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB as FacadesDB;
 
 class Caissiere extends Controller
@@ -357,5 +358,80 @@ class Caissiere extends Controller
         //$printer -> pulse();
 
         $printer->close();
+    }
+
+
+    public function comptabilite()
+    {
+        $clients = Client::where('payed_at', "!=", NULL)
+            ->where('type', "principale")
+            ->where('counted_at', NULL)
+            ->orderBy('id', 'desc')->get();
+        $totalPrix = 0;
+        $totalPoids = 0;
+
+        foreach ($clients as $client) {
+            $poids = 0;
+            foreach ($client->produits as $produit) {
+                $poids += $produit->tonnage;
+            }
+            if ($poids <= 400) {
+                $totalPrix += 200;
+            } else {
+                $totalPrix += $poids / 2;
+            }
+            $totalPoids += $poids;
+        }
+        return view('caissiere.comptabilite', compact(['clients', 'totalPrix', 'totalPoids']));
+    }
+
+    public function archiver()
+    {
+        $currentDateTime = Carbon::now()->format('YmdHis');
+        //return $currentDateTime;
+        $clients = Client::where('payed_at', "!=", NULL)
+            ->where('type', "principale")
+            ->where('counted_at', NULL)
+            ->update(['counted_at' => $currentDateTime]);
+        return redirect()->back();
+    }
+
+    public function historiqueCompta()
+    {
+        $clients = Client::select('counted_at', FacadesDB::raw('count(*) as total'))
+            ->where('payed_at', "!=", NULL)
+            ->where('type', "principale")
+            ->where('counted_at', '!=', NULL)
+            ->groupBy('counted_at')
+            ->orderBy('counted_at', 'desc')
+            ->get();
+        //return dd($clients);
+        return view('caissiere.historiqueCompta', compact(['clients']));
+    }
+
+    public function historiqueComptaList($counted_at)
+    {
+        $date = Carbon::parse($counted_at)->format('Y-m-d H:i:s');
+        $clients = Client::where('payed_at', "!=", NULL)
+            ->where('type', "principale")
+            ->where('counted_at', $date)
+            ->orderBy('id', 'desc')->get();
+        //return dd($clients);
+        $totalPrix = 0;
+        $totalPoids = 0;
+
+        foreach ($clients as $client) {
+            $poids = 0;
+            foreach ($client->produits as $produit) {
+                $poids += $produit->tonnage;
+            }
+            if ($poids <= 400) {
+                $totalPrix += 200;
+            } else {
+                $totalPrix += $poids / 2;
+            }
+            $totalPoids += $poids;
+        }
+        return view('caissiere.historiqueComptaList', compact(['clients', 'date', 'totalPrix', 'totalPoids']));
     }
 }
