@@ -144,7 +144,7 @@
                             <div class="desc">
                                 <p>Le client n'a pas encore reçu le produit</p>
                                 <div class="row inline-photos">
-                                    <div class="col-xs-10"><a href="{{ url('productOut',$client->id) }}"><button class="btn btn-block btn-outline btn-rounded btn-info"> Marquer comme reçu</button></a></div>
+                                    <div class="col-xs-10"><a href="{{ url('productOut',$client->id) }}"><button class="btn btn-block btn-outline btn-rounded btn-info"> Service reçu</button></a></div>
                                 </div>
                             </div>
                             @endif

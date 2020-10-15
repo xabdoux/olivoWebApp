@@ -7,11 +7,11 @@
 <link href="{{ asset('ample/plugins/bower_components/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
 @endsection
 @section('page_title')
-<h4 class="page-title">Clients Termines</h4>
+<h4 class="page-title">Clients Archives</h4>
 @endsection
 @section('breadcrumb')
 <li><a href="#">Dashboard</a></li>
-<li class="active">Clients Termines</li>
+<li class="active">Clients Archives</li>
 @endsection
 @section('content')
 <style type="text/css">
